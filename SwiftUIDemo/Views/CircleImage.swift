@@ -9,11 +9,13 @@
 import SwiftUI
 
 struct CircleImage: View {
+    var image: Image
+    
     var body: some View {
-        Image("music")
+        image
             .resizable()
             .scaledToFit()
-            .frame(width: 280.0,height:280)
+            .frame(width: 240.0, height:240)
             .clipShape(Circle())
             .overlay(
                 Circle().stroke(Color.white, lineWidth: 4))
@@ -23,6 +25,6 @@ struct CircleImage: View {
 
 struct CircleImage_Previews: PreviewProvider {
     static var previews: some View {
-        CircleImage()
+        CircleImage(image: ImageStore.shared.image(name: "chilkoottrail"))
     }
 }
