@@ -9,11 +9,21 @@
 import SwiftUI
 
 struct LandmarkList: View {
+    @EnvironmentObject private var userData: UserData
+    
     var body: some View {
         NavigationView {
-            List(landmardData) { landmark in
-                NavigationLink(destination: LandmarkDetail(landmark: landmark)) {
-                    LandmarkRow(landmark: landmark)
+            List {
+                Toggle(isOn: $userData.showFavoritesOnly) {
+                    Text("Show Favorites only")
+                }
+                
+                ForEach(userData.landmarks) { landmark in
+                    if !self.userData.showFavoritesOnly || landmark.isFavorite {
+                        NavigationLink(destination: LandmarkDetail(landmark: landmark)) {
+                            LandmarkRow(landmark: landmark)
+                        }
+                    }
                 }
             }
             .navigationBarTitle(Text("Landmarks"))
@@ -28,5 +38,6 @@ struct LandmarkList_Previews: PreviewProvider {
                 .previewDevice(PreviewDevice(rawValue: devicename))
                 .previewDisplayName(devicename)
         }
+        .environmentObject(UserData())
     }
 }
