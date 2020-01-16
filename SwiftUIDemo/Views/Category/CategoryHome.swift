@@ -37,11 +37,16 @@ struct CategoryHome: View {
     var body: some View {
         NavigationView {
             List {
-                FeaturedLandmarks(landmarks: self.featured)
-                    .scaledToFill()
-                    .frame(height: 200)
-                    .clipped()
-                    .listRowInsets(EdgeInsets())
+                NavigationLink(
+                destination: PageView(
+                    featured.map { FeatureCard(landmark: $0) })
+                    .aspectRatio(3/2, contentMode: .fit)) {
+                    FeaturedLandmarks(landmarks: self.featured)
+                        .scaledToFill()
+                        .frame(height: 200)
+                        .clipped()
+                        .listRowInsets(EdgeInsets())
+                }
                 ForEach(self.categories.keys.sorted(), id: \.self) { key in
                     CategoryRow(categoryName: key, items: self.categories[key]!)
                 }

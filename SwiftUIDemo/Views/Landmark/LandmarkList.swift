@@ -12,7 +12,7 @@ struct LandmarkList: View {
     @EnvironmentObject private var userData: UserData
     
     var body: some View {
-        List {
+        List {            
             Toggle(isOn: $userData.showFavoritesOnly) {
                 Text("Show Favorites only")
             }
